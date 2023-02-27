@@ -50,8 +50,7 @@ int main()
             cin >> s;
             order[i][id[1][s]] = j;
         }
-    for (int i = 1; i <= n; ++i)
-        q.push(i);
+    for (int i = 1; i <= n; ++i)  q.push(i);
     while( !q.empty())
     {
         int m, w, h;
@@ -69,9 +68,6 @@ int main()
             else q.push(m);
     }
     for (int i = 1; i <= n; ++i)
-    {
         cout << name[1][husband[i]] << ' ' << name[0][i];
-        if (i != n)  cout << '\n';
-    }
     return 0;
 }

@@ -52,8 +52,7 @@ int main()
             cin >> s;
             order[i][id[1][s]] = j;
         }
-    for (int i = 1; i <= n; ++i)
-        q.push(i);
+    for (int i = 1; i <= n; ++i)  q.push(i);
     while( !q.empty())
     {
         int m, w, h;

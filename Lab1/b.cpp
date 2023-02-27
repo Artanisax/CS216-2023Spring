@@ -39,8 +39,7 @@ int main()
     for (int i = 1; i <= m; ++i)
         for (int j = 1; j <= n; ++j)
             cin >> c[i][j];
-    for (int i = 1; i <= n; ++i)
-        q.push(i);
+    for (int i = 1; i <= n; ++i)  q.push(i);
     while (!q.empty())
     {
         int stu, col;
@@ -48,6 +47,7 @@ int main()
         q.pop();
         if (id[stu] == m)  continue;
         col = s[stu][++id[stu]].second;
+        if (s[stu][id[stu]].first <= 0) 
         if (enroll[col].size() < cap[col])
             enroll[col].push(make_pair(c[col][stu], stu));
         else
@@ -67,7 +67,6 @@ int main()
             cout << enroll[i].top().second << ' ';
             enroll[i].pop();
         }
-        if (i != m)  cout << '\n';
     }
     return 0;
 }

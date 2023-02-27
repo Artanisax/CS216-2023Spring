@@ -7,7 +7,8 @@ int main()
     while (t--)
     {
         scanf("%d", &n);
-        puts(n%6 ? "Alice" : "Bob");
+        printf(n%6 ? "Alice" : "Bob");
+        if (t) putchar('\n');
     }
     return 0;
 }
