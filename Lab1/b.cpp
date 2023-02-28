@@ -47,7 +47,7 @@ int main()
         q.pop();
         if (id[stu] == m)  continue;
         col = s[stu][++id[stu]].second;
-        if (s[stu][id[stu]].first <= 0) 
+        if (s[stu][id[stu]].first < 0)  continue;
         if (enroll[col].size() < cap[col])
             enroll[col].push(make_pair(c[col][stu], stu));
         else
@@ -67,6 +67,7 @@ int main()
             cout << enroll[i].top().second << ' ';
             enroll[i].pop();
         }
+        cout << '\n';
     }
     return 0;
 }
