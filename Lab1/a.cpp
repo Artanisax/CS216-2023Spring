@@ -68,6 +68,6 @@ int main()
             else q.push(m);
     }
     for (int i = 1; i <= n; ++i)
-        cout << name[1][husband[i]] << ' ' << name[0][i];
+        cout << name[1][husband[i]] << ' ' << name[0][i] << '\n';
     return 0;
 }
