@@ -9,11 +9,10 @@ void IO_accel()
     cout.tie(NULL);
 }
 
+const int N = 500;
+
 int main()
 {
-    IO_accel();
-    int n, k;
-    cin >> n >> k;
-    cout << (n == 1 ? 1 : (min(k, n-k+1)<<1));
+    
     return 0;
 }

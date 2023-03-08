@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "map": "cpp",
+        "math.h": "c",
+        "limits.h": "c"
+    }
+}
