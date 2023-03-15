@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,10 +10,28 @@ void IO_accel()
     cout.tie(NULL);
 }
 
-const int N = 500;
+typedef long long ll;
+
+const int N = 1e6+5;
+
+ll a[N], b[N];
 
 int main()
 {
-    
+    int n;
+    ll avg = 0, ans = 0;
+    cin >> n;
+    for (int i = 1; i <= n; ++i)
+    {
+        cin >> a[i];
+        avg += a[i];
+    }
+    avg /= n;
+    for (int i = 1; i <= n; ++i)
+        b[i] = b[i-1]+a[i]-avg;
+    sort(b+1, b+n+1);
+    for (int i = 1; i <= n; ++i)
+        ans += abs(b[i]-b[n+1>>1]);
+    cout << ans;
     return 0;
 }

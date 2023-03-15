@@ -2,6 +2,8 @@
     "files.associations": {
         "map": "cpp",
         "math.h": "c",
-        "limits.h": "c"
+        "limits.h": "c",
+        "stdio.h": "c",
+        "string.h": "c"
     }
 }
