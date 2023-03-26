@@ -1,8 +1,18 @@
-#include <stdio.h>
-#include <stdbool.h>
-
-int main() {
-	float a = 2.5f, b = 7.5f, c = 5.0f, d = 6.0f;
-	printf("%d", c/2+d < a && false || c <= d);
+#include<stdio.h>
+int main()
+{
+	char j;
+	printf("Enter an uppercase letter:\n");
+	scanf("%c", &j);
+	while (i <= j)
+	{
+		for (; j <= i; j++) /*两个循环嵌套*/
+		{
+			printf("%c", j);
+		}
+		printf("\n");
+		i++;
+	}
+	printf("%c", j);
 	return 0;
 }

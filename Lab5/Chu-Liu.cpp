@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <climits>
+#include <windows.h>
 
 using namespace std;
 
@@ -13,45 +14,62 @@ void IO_accel()
 
 typedef pair<int, int> pii;
 
-const int N = 1e2+5;
+const int N = 1e2+5, M = 1e4+5;
 
-int n, m, r, cnt, fa[N], ch[N],id[N], mini[N];
-vector<pii> edge[N];
+int n, m, r, cnt, fa[N], tp[N], id[N], mn[N];
+struct Edge {
+    int u, v, w;
+} e[M];
 
 int Chu_Liu()
 {
-    int u, v, w, f, ans = 0;
+    int ans = 0;
     while (true)
     {
         for (int i = 1; i <= n; ++i)
         {
             fa[i] = id[i] = 0;
-            mini[i] = INT_MAX;
+            mn[i] = INT_MAX;
         }
-        for (int u = 1; u <= n; ++u)
-            for (int i  = 0; i < edge[u].size(); ++i)
+        for (int i = 1, u, v, w; i <= m; ++i)
+        {
+            u = e[i].u, v = e[i].v, w = e[i].w;
+            if (u != v && w < mn[v])
             {
-                v = edge[u][i].first;
-                w = edge[u][i].second;
-                if (u!= v && w < mini[v])
-                {
-                    mini[v] = w;
-                    fa[v] = u;
-                }
+                mn[v] = w;
+                fa[v] = u;
             }
-        fa[r] = 0;
-        mini[r] = 0;
-        for (int i = 1; i <= n; ++i)
-        {
-            if (mini[i] == INT_MAX)
-                return -1;
-            ans += mini[i];
         }
+        Sleep(1000);
+        fa[r] = mn[r] = 0;
         cnt = 0;
-        for (int i = 1; i <= n; ++i)
+        for (int u = 1, v; u <= n; ++u)
         {
-            
+            if (mn[u] == INT_MAX)
+                return -1;
+            ans += mn[u];
+            for (v = u; tp[v] != u && v != r && !id[v]; v = fa[v])
+                tp[v] = u;
+            if (v != r && !id[v])
+            {
+                id[u] = ++cnt;
+                for (v = fa[u]; v != u; v = fa[v])
+                    id[v] = cnt;
+            }
         }
+        if (!cnt)
+            break;
+        for (int i = 1; i <= n; ++i)
+            if (!id[i])
+                id[i] = ++cnt;
+        for (int i = 1; i <= m; ++i)
+        {
+            e[i].w -= mn[e[i].v];
+            e[i].u = id[e[i].u];
+            e[i].v = id[e[i].v];
+        }
+        n = cnt;
+        r = id[r];
     }
     return ans;
 }
@@ -62,10 +80,11 @@ int main()
     int u, v, w;
     for (int i = 1; i <= m; ++i)
     {
-        cin >> u, v, w;
+        cin >> u >> v >> w;
         if (v != r)
-            edge[u].push_back(make_pair(v, w));
+            e[++cnt] = (Edge){u, v, w};
     }
+    m = cnt;
     cout << Chu_Liu();
     return 0;
 }
