@@ -33,7 +33,7 @@ int main()
 {
     int n, k, t;
     cin >> n >> k;
-    t = k;
+    t = n;
     for (int i = 1; i <= n; ++i)
     {
         c[i] = i;
@@ -42,15 +42,18 @@ int main()
             e[++cnt] = (edge){i, j, sqrt(pow(x[i]-x[j], 2)+pow(y[i]- y[j], 2))};
     }
     sort(e+1, e+cnt+1, edge::comp);
-    for (int i = 1; i <= cnt; ++i)
-    {
-        if (t == k || find(e[i].u) == find(e[i].v))
+    int id;
+    for (id = 1; t > k; ++id)
+        if (find(e[id].u) != find(e[id].v))
         {
-            cout << fixed << setprecision(2) << e[i].dist;
+            c[c[e[id].v]] = c[c[e[id].u]];
+            --t;
+        }
+    for (; id <= cnt; ++id)
+        if (find(e[id].u) != find(e[id].v))
+        {
+            cout << fixed << setprecision(2) << e[id].dist;
             break;
         }
-        c[e[i].v] = c[e[i].u];
-        --t;
-    }
     return 0;
 }
