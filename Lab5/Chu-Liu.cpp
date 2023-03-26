@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <climits>
-#include <windows.h>
 
 using namespace std;
 
@@ -40,7 +39,6 @@ int Chu_Liu()
                 fa[v] = u;
             }
         }
-        Sleep(1000);
         fa[r] = mn[r] = 0;
         cnt = 0;
         for (int u = 1, v; u <= n; ++u)
