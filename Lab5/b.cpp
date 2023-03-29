@@ -25,12 +25,12 @@ int Chu_Liu()
     int ans = 0;
     while (true)
     {
-        for (int i = 1; i <= n; ++i)
+        for (int i = 0; i <= n; ++i)
         {
             fa[i] = tp[i] = id[i] = 0;
             mn[i] = INT_MAX;
         }
-        for (int i = 1, u, v, w; i <= m; ++i)
+        for (int i = 0, u, v, w; i <= m; ++i)
         {
             u = e[i].u, v = e[i].v, w = e[i].w;
             if (u != v && w < mn[v])
@@ -41,14 +41,14 @@ int Chu_Liu()
         }
         mn[r] = 0;
         cnt = 0;
-        for (int u = 1, v; u <= n; ++u)
+        for (int u = 0, v; u <= n; ++u)
         {
             if (mn[u] == INT_MAX)
                 return -1;
             ans += mn[u];
-            for (v = u; tp[v] != u && v != r && !id[v]; v = fa[v])
+            for (v = u; !tp[v] && v != r && !id[v]; v = fa[v])
                 tp[v] = u;
-            if (v != r && !id[v])
+            if (v != r && !id[v] && tp[v] == u)
             {
                 id[v] = ++cnt;
                 for (int t = fa[v]; t != v; t = fa[t])
@@ -57,7 +57,7 @@ int Chu_Liu()
         }
         if (!cnt)
             break;
-        for (int i = 1; i <= n; ++i)
+        for (int i = 0; i <= n; ++i)
             if (!id[i])
                 id[i] = ++cnt;
         for (int i = 1; i <= m; ++i)
@@ -74,32 +74,33 @@ int Chu_Liu()
 
 int main()
 {
-    cin >> n >> m;
-    r = n+1;
-    int u, v, w;
-    for (int i = 1; i <= m; ++i)
+    while (cin >> n >> m)
     {
-        cin >> u >> v >> w;
-        ++u, ++v;
-        if (u != v)
-            e[++cnt] = (Edge){u, v, w};
-    }
-    for (int i = 1; i <= n; ++i)
-        e[++cnt] = (Edge){r, i, SUM};
-    ++n, m = cnt;
-    int ans = Chu_Liu();
-    if (ans > (SUM<<1))
+        r = n;
+        int u, v, w, ans;
+        for (int i = 0; i < m; ++i)
+        {
+            cin >> u >> v >> w;
+            if (u != v)
+                e[++cnt] = (Edge){u, v, w};
+        }
+        for (int i = 0; i < n; ++i)
+            e[++cnt] = (Edge){r, i, SUM};
+        m = cnt;
+        ans = Chu_Liu();
+        if (ans > (SUM<<1))
             cout << "impossible";
         else
         {
             int r;
-            for (int i = 1; i <= n; ++i)
-                if (fa[i] == fa[r])
+            for (int i = 0; i < n; ++i)
+                if (fa[i] == n)
                 {
                     r = i;
                     break;
                 }
-            cout << ans-SUM << ' ' << r-1;
+            cout << ans-SUM << ' ' << r << '\n';
         }
+    }
     return 0;
 }
