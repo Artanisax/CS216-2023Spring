@@ -1,18 +1,11 @@
 #include<stdio.h>
-int main()
-{
-	char j;
-	printf("Enter an uppercase letter:\n");
-	scanf("%c", &j);
-	while (i <= j)
-	{
-		for (; j <= i; j++) /*两个循环嵌套*/
-		{
-			printf("%c", j);
-		}
-		printf("\n");
-		i++;
+int main(void) {
+	int fib_numbers[40] = { 1,1 };
+	for (int i = 2; i < 40; i++) {
+		fib_numbers[i] = fib_numbers[i - 1] + fib_numbers[i - 2];
 	}
-	printf("%c", j);
-	return 0;
+	for (int j = 0; j < 40; j++) {
+		printf("%d\n", fib_numbers[j]);
+	}
+
 }

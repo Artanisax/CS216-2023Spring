@@ -27,7 +27,7 @@ int Chu_Liu()
     {
         for (int i = 1; i <= n; ++i)
         {
-            fa[i] = id[i] = 0;
+            fa[i] = tp[i] = id[i] = 0;
             mn[i] = INT_MAX;
         }
         for (int i = 1, u, v, w; i <= m; ++i)
@@ -39,7 +39,7 @@ int Chu_Liu()
                 fa[v] = u;
             }
         }
-        fa[r] = mn[r] = 0;
+        mn[r] = 0;
         cnt = 0;
         for (int u = 1, v; u <= n; ++u)
         {
@@ -47,12 +47,16 @@ int Chu_Liu()
                 return -1;
             ans += mn[u];
             for (v = u; tp[v] != u && v != r && !id[v]; v = fa[v])
+            {
                 tp[v] = u;
+                cerr << v << ' ';
+            }
+            cerr << '\n';
             if (v != r && !id[v])
             {
-                id[u] = ++cnt;
-                for (v = fa[u]; v != u; v = fa[v])
-                    id[v] = cnt;
+                id[v] = ++cnt;
+                for (int t = fa[v]; t != v; t = fa[t])
+                    id[t] = cnt;
             }
         }
         if (!cnt)

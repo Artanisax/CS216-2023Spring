@@ -17,16 +17,13 @@ int zl()
         for (int i = 1, u, v, w; i <= m; i++) // Step 1
             if (e[i].u != e[i].v && (w = e[i].w) < mn[v = e[i].v])
                 mn[v] = w, fa[v] = e[i].u;
-        mn[root] = 0;
-        for (int u = 1; u <= n; u++) // Step 2
+        mn[root] = 0, tot = 0;
+        for (int u = 1, v; u <= n; u++) // Step 2
         {
             ans += mn[u];
             if (mn[u] == 1e9)
                 return -1;
-        }
-
-        for (int u = 1, v = 1; u <= n; u++, v = u) // Step 3
-        {
+            v = u;
             while (v != root && tp[v] != u && !lp[v])
                 tp[v] = u, v = fa[v];
             if (v != root && !lp[v])
@@ -44,7 +41,7 @@ int zl()
 
         for (int i = 1; i <= m; i++) // Step 6
             e[i].w -= mn[e[i].v], e[i].u = lp[e[i].u], e[i].v = lp[e[i].v];
-        n = tot, root = lp[root], tot = 0; // Step 7
+        n = tot, root = lp[root]; // Step 7
     }
 }
 
