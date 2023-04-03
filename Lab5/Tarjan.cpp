@@ -14,7 +14,8 @@ struct Edge
     int u, v;
     ll w, w0;
 
-    Edge(int u, int v, ll w): u(u), v(v), w(w), w0(w) {};
+    Edge(int u, int v, ll w):
+    	u(u), v(v), w(w), w0(w) {};
 };
 
 struct UnionFind
@@ -31,10 +32,11 @@ struct UnionFind
 struct Node  // for leftist tree
 {
     Edge *e;
-    int dist = 0, lazy = 0;
-    Node *lc = nullptr, *rc = nullptr;
+    int dist, lazy;
+    Node *lc, *rc;
 
-    Node(Edge *e): e(e) {};
+    Node(Edge *e):
+    	e(e), dist(0), lazy(0), lc(nullptr), rc(nullptr) {};
 
     void push() // push down the lazy tag
     {
@@ -80,7 +82,7 @@ vector<Edge *> edge[N];
 bool vis[N<<1];
 void contract()
 {
-    // build leftist tree for all in-edges of original vertices in O(m)
+    // build leftist trees in O(m)
     for (int i = 1; i <= n; ++i)
     {
         queue<Node *>q;
@@ -144,9 +146,8 @@ ll expand(int x, int r)
     ll ret = 0;
     while (x != r)
     {
-        ll temp = expand_loop(x);
-        if (temp >= INF)  return INF;
-        ret += temp;
+        ret += expand_loop(x);
+        if (ret >= INF)  return INF;
         x = fa[x];
     }
     return ret;
@@ -166,7 +167,7 @@ int main()
     for (int i = 1; i < n; ++i)
         edge[i+1].push_back(new Edge(i, i+1, INF));
     contract();
-    ll ans = expand(r, n);
+    ll ans = expand(r, n); // enter from the true root
     printf("%lld", ans == INF ? -1 : ans);
     return 0;
 }
