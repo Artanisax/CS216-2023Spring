@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cstring>
 #include <cstdio>
 
@@ -36,8 +37,8 @@ ll zhuliu(int root, int V, int E)
         for (int i = 0; i < V; i++)
             if (in[i] == INF && i != root)
                 return -1;
-        memset(id, -1, sizeof(int)*V);
-        memset(vis, -1, sizeof(int)*V);
+        memset(id, -1, sizeof(id));
+        memset(vis, -1, sizeof(vis));
         int cnt = 0;
         in[root] = 0;
         for (int i = 0; i < V; i++)
@@ -57,17 +58,25 @@ ll zhuliu(int root, int V, int E)
             }
         }
         if (!cnt)
+        {
             break;
+        }
         for (int i = 0; i < V; i++)
+        {
             if (id[i] == -1)
+            {
                 id[i] = cnt++;
+            }
+        }
         for (int i = 0; i < E; i++)
         {
             int u = edge[i].u, v = edge[i].v;
             edge[i].u = id[u];
             edge[i].v = id[v];
             if (id[u] != id[v])
+            {
                 edge[i].w -= in[v];
+            }
         }
         V = cnt;
         root = id[root];
@@ -78,21 +87,28 @@ ll zhuliu(int root, int V, int E)
 int main()
 {
     int n, m;
-    scanf("%d %d", &n, &m);
-    for (int i = 0; i < m; i++)
+    while (~scanf("%d %d", &n, &m))
     {
-        scanf("%d %d %d", &edge[i].u, &edge[i].v, &edge[i].w);
-        edge[i].u++, edge[i].v++;
+        for (int i = 0; i < m; i++)
+        {
+            scanf("%d %d %d", &edge[i].u, &edge[i].v, &edge[i].w);
+            edge[i].u++, edge[i].v++;
+        }
+        for (int i = m; i < n + m; i++)
+        {
+            edge[i].u = 0;
+            edge[i].v = i - m + 1;
+            edge[i].w = SUM;
+        }
+        ll res = zhuliu(0, n + 1, n + m);
+        if (res == -1 || res >= SUM<<1)
+        {
+            puts("impossible");
+        }
+        else
+        {
+            printf("%lld %d\n", res - SUM, pos - m);
+        }
+        putchar('\n');
     }
-    for (int i = m; i < n + m; i++)
-    {
-        edge[i].u = 0;
-        edge[i].v = i - m + 1;
-        edge[i].w = SUM;
-    }
-    ll res = zhuliu(0, n + 1, n + m);
-    if (res == -1 || res >= SUM<<1)
-        puts("impossible");
-    else
-        printf("%lld %d\n", res - SUM, pos - m);
 }

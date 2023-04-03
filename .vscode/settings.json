@@ -10,6 +10,18 @@
         "deque": "cpp",
         "vector": "cpp",
         "string_view": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "bitset": "cpp",
+        "forward_list": "cpp",
+        "fstream": "cpp",
+        "ostream": "cpp",
+        "stdbool.h": "c",
+        "barrier": "cpp",
+        "mutex": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp",
+        "variant": "cpp",
+        "climits": "cpp",
+        "numbers": "cpp"
     }
 }
