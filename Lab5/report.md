@@ -183,9 +183,8 @@ ll expand(int x, int r)
     ll ret = 0;
     while (x != r)
     {
-        ll temp = expand_loop(x);
-        if (temp >= INF)  return INF;
-        ret += temp;
+        ret += expand_loop(x);
+        if (ret >= INF)  return INF;
         x = fa[x];
     }
     return ret;

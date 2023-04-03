@@ -112,8 +112,8 @@ void contract()
             t = id[in[t]->u];  // the super node u belongs to
         } while (t == s && tree[t]);  // till the path extends or no edge
         if (t == s)  break;  // the whole graph is contracted
-        if (!vis[t])  continue;  // no loop found
-        // contract the loop, update id[], fa[] and the lazy tag
+        if (!vis[t])  continue;  // no cycle found
+        // contract the cycle, update id[], fa[] and the lazy tag
         t = s;
         ++n;
         while (t != n)  // till all are merged the new super node
@@ -122,7 +122,7 @@ void contract()
             if (tree[t])  tree[t]->lazy -= in[t]->w;
             tree[n] = merge(tree[n], tree[t]);
             p = id[in[t]->u];  // the super node u belongs to
-            nxt[p == n ? s : p] = t;  // record the loop
+            nxt[p == n ? s : p] = t;  // record the cycle
             t = p;
         }
     }
@@ -130,9 +130,10 @@ void contract()
 
 ll expand(int x, int r);
 
-ll expand_loop(int x)
+ll expand_cycle(int x)
 {
     ll ret = 0;
+    // traverse the cycle
     for (int t = nxt[x]; t != x; t = nxt[t])
         if (in[t]->w0 == INF)
             return INF;
@@ -146,7 +147,7 @@ ll expand(int x, int r)
     ll ret = 0;
     while (x != r)
     {
-        ret += expand_loop(x);
+        ret += expand_cycle(x);
         if (ret >= INF)  return INF;
         x = fa[x];
     }
