@@ -89,13 +89,16 @@ void contract() {
     if (a == b) break;
     if (!mark[a]) continue;
     // 对发现的环进行收缩，以及环内的结点重新编号，总权值更新。
+    printf("%d:\n", n+1);
     for (a = b, n++; a != n; a = p) {
+      printf("%d ", a);
       id.fa[a] = fa[a] = n;
       if (Q[a]) Q[a]->constant -= ed[a]->w;
       Q[n] = merge(Q[n], Q[a]);
       p = id[ed[a]->u];
       nxt[p == n ? b : p] = a;
     }
+    putchar('\n');
   }
 }
 

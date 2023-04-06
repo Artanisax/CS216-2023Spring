@@ -20,7 +20,7 @@ struct Edge
 
 struct UnionFind
 {
-    int fa[N<<1] = {};
+    int fa[N<<1];
 
     int find(int x)
     { return fa[x] ? fa[x] = find(fa[x]) : x; }
@@ -130,26 +130,30 @@ void contract()
 
 ll expand(int x, int r);
 
+// expand x as a super node
 ll expand_cycle(int x)
 {
+    cerr << "cycle: " << x << '\n';
     ll ret = 0;
-    // traverse the cycle
+    // traverse the cycle (nodes of the same father)
     for (int t = nxt[x]; t != x; t = nxt[t])
         if (in[t]->w0 == INF)
             return INF;
         else
-            ret += expand(in[t]->v, t)+in[t]->w0;
+            ret += expand(in[t]->v, t)+in[t]->w0;  // expand down
     return ret;
 }
 
+// from x to r in the contraction tree, O(n) in total
 ll expand(int x, int r)
 {
     ll ret = 0;
     while (x != r)
     {
+        cerr << "expand: " << x << ' ' << r << '\n';
         ret += expand_cycle(x);
         if (ret >= INF)  return INF;
-        x = fa[x];
+        x = fa[x];  // expand up
     }
     return ret;
 }
