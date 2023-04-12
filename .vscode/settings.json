@@ -22,6 +22,9 @@
         "thread": "cpp",
         "variant": "cpp",
         "climits": "cpp",
-        "numbers": "cpp"
+        "numbers": "cpp",
+        "iomanip": "cpp",
+        "istream": "cpp",
+        "type_traits": "cpp"
     }
 }
