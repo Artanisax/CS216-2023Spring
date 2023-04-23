@@ -9,7 +9,7 @@ int main(){
     FILE *p = fopen("x.in","w");
     fprintf(p, "1");
     for (int i = 1; i < N-1; i++)
-        fprintf(p, "1");
-    fprintf(p, "1");
+        fprintf(p, "?");
+    fprintf(p, "0");
     return 0;
 }

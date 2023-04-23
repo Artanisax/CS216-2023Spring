@@ -25,6 +25,8 @@
         "numbers": "cpp",
         "iomanip": "cpp",
         "istream": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "complex": "cpp",
+        "cmath": "cpp"
     }
 }
