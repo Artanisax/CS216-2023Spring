@@ -15,7 +15,7 @@ typedef long long ll;
 
 ll n, ans, MOD;
 ll dp[260][260], f1[260][260], f2[260][260];
-int p[9] = {0,2,3,5,7,11,13,17,19};
+int p[9] = {2,3,5,7,11,13,17,19};
 
 struct Number
 {
@@ -28,10 +28,10 @@ struct Number
 	void init()
 	{
 		ll tmp = val;
-		for (int i = 1; i <= 8; i++)
+		for (int i = 0; i < 8; i++)
 		{
 			if (tmp%p[i] == 0)
-                S |= (1<<i-1);
+                S |= 1<<i;
 			while (tmp%p[i] == 0)
 				tmp /= p[i];
 		}
