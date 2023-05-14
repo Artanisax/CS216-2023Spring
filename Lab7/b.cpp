@@ -81,67 +81,67 @@ char s[N];
 int rev[N];
 Complex_d t[N], r[N], a[N], b[N], c[N], tmp[N];
 
-void fft(Complex_d* f, int n, int rev) {
-    if (n == 1)
-        return;
-    for (int i = 0; i < n; i++)
-        tmp[i] = f[i];
-    for (int i = 0; i < n; i++)
+// void fft(Complex_d* f, int n, int rev) {
+//     if (n == 1)
+//         return;
+//     for (int i = 0; i < n; i++)
+//         tmp[i] = f[i];
+//     for (int i = 0; i < n; i++)
+//         if (i&1)
+//             f[(n>>1)+(i>>1)] = tmp[i];
+//         else
+//             f[i>>1] = tmp[i];
+//     Complex_d *g = f, *h = f+(n>>1);
+//     fft(g, n>>1, rev);
+//     fft(h, n>>1, rev);
+//     Complex_d cur(1, 0), step(cos(2*PI/n), sin(2*PI*rev/n));
+//     for (int i = 0; i < (n>>1); i++)
+//         {
+//             tmp[i] = g[i]+cur*h[i];
+//             tmp[i+(n>>1)] = g[i]-cur*h[i];
+//             cur *= step;
+//         }
+//     for (int i = 0; i < n; i++)
+//         f[i] = tmp[i];
+// }
+
+inline void change(Complex_d *a, int n)
+{
+    for (int i = 0; i < n; ++i)
+    {
+        rev[i] = rev[i >> 1] >> 1;
         if (i&1)
-            f[(n>>1)+(i>>1)] = tmp[i];
-        else
-            f[i>>1] = tmp[i];
-    Complex_d *g = f, *h = f+(n>>1);
-    fft(g, n>>1, rev);
-    fft(h, n>>1, rev);
-    Complex_d cur(1, 0), step(cos(2*PI/n), sin(2*PI*rev/n));
-    for (int i = 0; i < (n>>1); i++)
-        {
-            tmp[i] = g[i]+cur*h[i];
-            tmp[i+(n>>1)] = g[i]-cur*h[i];
-            cur *= step;
-        }
-    for (int i = 0; i < n; i++)
-        f[i] = tmp[i];
+            rev[i] |= n >> 1;
+    }
+    for (int i = 0; i < n; ++i)
+        if (i < rev[i])
+            swap(a[i], a[rev[i]]);
+    return;
 }
 
-// inline void change(Complex_d *a, int n)
-// {
-//     for (int i = 0; i < n; ++i)
-//     {
-//         rev[i] = rev[i >> 1] >> 1;
-//         if (i&1)
-//             rev[i] |= n >> 1;
-//     }
-//     for (int i = 0; i < n; ++i)
-//         if (i < rev[i])
-//             swap(a[i], a[rev[i]]);
-//     return;
-// }
-
-// inline void fft(Complex_d *a, int n, int flag)
-// {
-//     change(a, n);
-//     for (int h = 2; h <= n; h <<= 1)
-//     {
-//         Complex_d wn(cos(2*PI/h), sin(flag*2*PI/h));
-//         for (int j = 0; j < n; j += h)
-//         {
-//             Complex_d w(1, 0);
-//             for (int k = j; k < j + h / 2; k++)
-//             {
-//                 Complex_d u = a[k];
-//                 Complex_d t = w*a[k+h/2];
-//                 a[k] = u+t;
-//                 a[k+h/2] = u-t;
-//                 w = w*wn;
-//             }
-//         }
-//     }
-//     if (flag == -1)
-//         for (int i = 0; i < n; i++)
-//             a[i].real(a[i].real()/n);
-// }
+inline void fft(Complex_d *a, int n, int flag)
+{
+    change(a, n);
+    for (int h = 2; h <= n; h <<= 1)
+    {
+        Complex_d wn(cos(2*PI/h), sin(flag*2*PI/h));
+        for (int j = 0; j < n; j += h)
+        {
+            Complex_d w(1, 0);
+            for (int k = j; k < j + h / 2; k++)
+            {
+                Complex_d u = a[k];
+                Complex_d t = w*a[k+h/2];
+                a[k] = u+t;
+                a[k+h/2] = u-t;
+                w = w*wn;
+            }
+        }
+    }
+    if (flag == -1)
+        for (int i = 0; i < n; i++)
+            a[i].real(a[i].real()/n);
+}
 
 int main()
 {

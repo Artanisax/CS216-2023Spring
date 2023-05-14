@@ -27,6 +27,9 @@
         "istream": "cpp",
         "type_traits": "cpp",
         "complex": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "cstdlib": "cpp",
+        "sstream": "c",
+        "random": "cpp"
     }
 }
