@@ -81,6 +81,7 @@ ll dfs(int u, ll limit)
 
 int main()
 {
+    IO_accel();
     cin >> n >> m >> s >> t;
     memset(head+1, -1, sizeof(int)*n);
     for (int i = 1; i <= m; i++)

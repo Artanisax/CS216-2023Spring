@@ -25,11 +25,11 @@ int n, m, s, t, cnt, ans;
 int dep[N], head[N], nxt[N*N<<5], now[N];
 
 int id(int i, int j)
-{ return (i-1)*n+j; }
+{ return (i-1)*m+j; }
 
 void add(int u, int v, int w)
 {
-    cerr << "check: " <<  u << ' ' << v << ' ' << w << '\n';
+    // cerr << "check: " <<  u << ' ' << v << ' ' << w << '\n';
     nxt[cnt] = head[u];
     head[u] = cnt;
     edge[cnt++] = (Edge){v, w};
@@ -70,6 +70,8 @@ int dfs(int u, int limit)
         if (!w || dep[v] != dep[u]+1)
             continue;
         int flow = dfs(v, min(limit, w));
+        if (!flow)
+            dep[v] = -1;
         edge[i].w -= flow;
         edge[i^1].w += flow;
         limit -= flow;
@@ -80,6 +82,7 @@ int dfs(int u, int limit)
 
 int main()
 {
+    IO_accel();
     cin >> n >> m;
     s = 0, t = n*m+1;
     memset(head, -1, sizeof(int)*(n*m+2));

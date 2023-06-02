@@ -75,6 +75,7 @@ int dfs(int u, int limit)
 
 int main()
 {
+    IO_accel();
     cin >> n >> m >> k;
     t = n++;
     memset(head, -1, sizeof(int)*n);
